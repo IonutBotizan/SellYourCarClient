@@ -1,0 +1,13 @@
+<div  [routerLink]="['/cars', car.id]" class="well hoverwell thumbnail">
+ <div class="row">
+  <div style="font-size: 21px">{{car.fullName}} <span class="pull-right">{{car.price}} Euro</span></div>
+  <img src="../../../assets/{{car.imageUrl}}" alt="some title" class="col-lg-8 col-md-8"
+       style="height: 130px" />
+    <div class="col-lg-4" style="padding-top: 5%;padding-left: 1px">
+         <div> {{car.description}}</div>
+     <div>Mileage:<strong> {{car.mileage}} </strong> km</div>
+       <div> Fuel: {{car.fuel}}</div>
+       <div style="padding-bottom: 1px"> Year: {{car.year}}</div>
+</div>
+ </div>
+</div>

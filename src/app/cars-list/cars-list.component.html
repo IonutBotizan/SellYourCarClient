@@ -1,0 +1,11 @@
+<div>
+    <h1>Upcoming list of cars</h1>
+    <hr/>
+    <div class="row">
+        <div *ngFor="let car of cars">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+            <car-thumbnail (click)="handleClickEvent(car.fullName)" [car]="car">  </car-thumbnail>
+            </div>
+        </div>
+    </div>
+</div>

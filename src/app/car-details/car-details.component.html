@@ -1,0 +1,24 @@
+<div>
+    <img src="../../../assets/{{car.imageUrl}}" [alt]="car.fullName" style="height: 200px;">
+
+    <div class="row">
+        <div class="col-md-11">
+            <h2>{{car.fullName}} </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div><strong>Fuel:</strong> {{car.fuel}}</div>
+            <div><strong>Mileage:</strong> {{car.mileage}}</div>
+            <div><strong>Price:</strong> ${{car.price}}</div>
+        </div>
+        <div class="col-md-6">
+            <address>
+                <strong>Address:</strong>
+                {{car.location}}<br />
+                {{car.dateAdded}}
+            </address>
+        </div>
+    </div>
+</div>
