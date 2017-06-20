@@ -1,5 +1,5 @@
 /**
- * Created by ionut on 16-6-2017.
+ * Created by ionut on 20-6-2017.
  */
 
 export interface iCar
@@ -13,5 +13,23 @@ export interface iCar
     fuel : string,
     year:number ,
     location : string ,
-    dateAdded : Date
+    dateAdded : Date ,
+    model : iModel
+}
+export interface iMake
+{
+    id: number  ,
+    name : string,
+
+}
+export interface iModel
+{
+    id: number,
+    name: string ,
+    make: iMake,
+    adds: iCar[]
+}
+export interface iPagedResults<T>{
+    results: T;
+    totalItems: number;
 }
