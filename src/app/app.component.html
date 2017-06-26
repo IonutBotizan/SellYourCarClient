@@ -17,18 +17,25 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                    <form id="searchForm"  class="navbar-form navbar-right"  >
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search Sessions" >
-                        </div>
-                        <button class="btn btn-default" >
-                            Search
+                    <div class="dropdown"  *ngIf="!auth.isAuthenticated()">
+                        <button class="btn-default dropdown-toggle" id="dd1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Account
+                            <span class="caret"></span>
                         </button>
-                    </form>
+                        <ul class="dropdown-menu" aria-labelledby="dd1">
+                            <li> <a  [routerLink]="['user/login']">Login</a> </li>
+                            <li> <a [routerLink]="['/cars']"> Register</a></li>
+                        </ul>
+                    </div>
                 </li>
+                   <li>
+                    <a *ngIf="auth.isAuthenticated()"
+                       [routerLink]="['user/profile']">Welcome {{auth.currentUser.firstName}}</a>
+                   </li>
                 <li>
-                    <a *ngIf="!auth.isAuthenticated()" [routerLink]="['user/login']">Login</a>
-                    <a *ngIf="auth.isAuthenticated()" [routerLink]="['user/profile']">Welcome {{auth.currentUser.firstName}}</a>
+                <a *ngIf="auth.isAuthenticated()"
+                       [routerLink]="['user/profile']">Logout</a>
+
                 </li>
             </ul>
         </div>
@@ -44,11 +51,11 @@
 <footer class="navbar navbar-fixed-bottom">
     <div class="text-center">
         <h5 class="white">
-            <a href="http://chsakell.com/" target="_blank">Created by </a>
-            <a href="https://www.facebook.com/chsakells.blog" target="_blank" style="padding-left: 20px">
+            <a href="https://www.facebook.com/botizan.ionut" target="_blank">Created by </a>
+            <a href="https://www.facebook.com/botizan.ionut" target="_blank" style="padding-left: 20px">
                 <i class="fa fa-facebook fa-2x" aria-hidden="true"></i>
             </a>
-            <a href="https://github.com/chsakell" target="_blank" style="padding-left: 20px">
+            <a href="https://github.com/IonutBotizan" target="_blank" style="padding-left: 20px">
                 <i class="fa fa-github fa-2x" aria-hidden="true"></i>
             </a>
         </h5>
