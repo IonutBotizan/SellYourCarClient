@@ -1,9 +1,9 @@
 /**
- * Created by ionut on 22-6-2017.
+ * Created by ionut on 25-6-2017.
  */
 import {Injectable} from '@angular/core';
 
-import {iCar} from "./iCar.model";
+import {iCar, iMake, iModel, iPagedResults} from "./iCar.model";
 import {Observable} from "rxjs/Observable";
 import {Http , Response} from "@angular/http";
 import {ConfigService} from "./config.service";
@@ -15,22 +15,44 @@ export class CarsService {
         this._baseUrl = _cfg.getApiUrl();
     }
 
-
-    getCars()  : Observable<iCar[]>{
-        return this._http.get(this._baseUrl + 'make/all_makes/model/all_models/anunturi/page')
-            .map((response: Response)=> {
-             return  <iCar[]>response.json();
+    getMakes() : Observable<iMake[]>{
+        return this._http.get(this._baseUrl + 'make')
+            .map((response: Response)=>{
+              return <iMake[]>response.json();
             })
             .catch(this.handleError);
     }
+    getModels(makeName: string) : Observable<iModel[]>{
+        let param = new URLSearchParams();
+        param.set('makeName' ,makeName );
+        return this._http.get(this._baseUrl+ 'make/'+ makeName+'/model', {search : param})
+            .map((response: Response)=>{
+              return <iModel[]>response.json();
+            }).catch(this.handleError);
+    }
+
+        getCars(makeName: string , modelName: string , page: number ,pageSize:number): Observable<iPagedResults<iCar[]>>{
+
+        return this._http.get(`${this._baseUrl}make/${makeName}/model/${modelName}/anunturi/page/${page}/${pageSize}`)
+            .map((response: Response)=>{
+             const totalAdds = +response.headers.get('X-Pagination');
+               let cars = <iCar[]>response.json();
+               return {
+                 results: cars ,
+                 totalAdds: totalAdds
+               };
+            }).catch(this.handleError);
+        }
+
+
     getSingleCar(id: number): Observable<iCar> {
-        return this._http.get(this._baseUrl +'make/all_makes/model/all_models/anunt/'+ id)
+        return this._http.get(this._baseUrl +'anunt/'+ id)
             .map((response: Response)=>{
                return <iCar>response.json();
             })
             .catch(this.handleError);
     }
-    handleError(error: any){
+    handleError(error: Response){
         let appError = error.headers.get('Application-Error');
         let serverError = error.json();
         let modelStateErrors: string = '';
