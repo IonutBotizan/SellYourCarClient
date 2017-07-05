@@ -17,26 +17,32 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                    <div class="dropdown"  *ngIf="!auth.isAuthenticated()">
+                    <div class="dropdown" [hidden]="auth.currentUser">
                         <button class="btn-default dropdown-toggle" id="dd1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Account
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dd1">
                             <li> <a  [routerLink]="['user/login']">Login</a> </li>
-                            <li> <a [routerLink]="['/cars']"> Register</a></li>
+                            <li> <a [routerLink]="['user/register']"> Register</a></li>
                         </ul>
                     </div>
+                    <div [hidden]="!auth.currentUser">
+                        <span >Welcome {{auth.currentUser?.UserName}}</span>
+                    <a  (click)="logout()"> Logout </a>
+
+                    </div>
                 </li>
-                   <li>
+               <!--    <li>
                     <a *ngIf="auth.isAuthenticated()"
                        [routerLink]="['user/profile']">Welcome {{auth.currentUser.firstName}}</a>
                    </li>
                 <li>
                 <a *ngIf="auth.isAuthenticated()"
-                       [routerLink]="['user/profile']">Logout</a>
+                       [routerLink]="['user/login']">Logout</a>
 
                 </li>
+                -->
             </ul>
         </div>
         <!-- /.navbar-collapse -->
