@@ -1,8 +1,7 @@
 /**
  * Created by ionut on 15-6-2017.
  */
-import { Component, ViewContainerRef } from '@angular/core';
-// Add the RxJS Observable operators we need in this app.
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import './rxjs-operators';
 import {AuthService} from "./user/authentication.service";
 
@@ -10,10 +9,24 @@ import {AuthService} from "./user/authentication.service";
     selector: 'scheduler',
     templateUrl: './src/app/app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
     constructor(private viewContainerRef: ViewContainerRef, private auth: AuthService) {
-        // You need this small hack in order to catch application root view container ref
         this.viewContainerRef = viewContainerRef;
+        console.log('Is currentUSer in authcontoller  '+this.auth.currentUser);
+
+    }
+     ngOnInit(){
+         console.log("Session storage : in onInit "+ sessionStorage.getItem("currentUser"));
+         if(sessionStorage.getItem("currentUser")!==null)
+             this.auth.currentUser =JSON.parse(sessionStorage.getItem('currentUser'));
+
+     }
+
+    logout(){
+        sessionStorage.removeItem('currentUser');
+        this.auth.currentUser = undefined;
+        console.log('Is currentUSer  '+this.auth.currentUser);
+
     }
 }
