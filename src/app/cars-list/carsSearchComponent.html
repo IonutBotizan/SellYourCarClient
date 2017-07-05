@@ -1,0 +1,98 @@
+<div class="row">
+    Make : {{selectedMake.name}}
+    <div class="col-md-4">
+        <select class="form-control" [(ngModel)]="selectedMake.name" (change)="onSelect($event.target.value)">
+            <option value="all_makes">--All Makes--</option>
+            <option *ngFor="let make of Makes" [selected]="make.name===selectedMake.name" value={{make.name}}>
+                {{make.name}}
+            </option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select class="form-control" [(ngModel)]="selectedModel.name" (change)="onModelSelect($event.target.value)">
+            <option value="all_models"> --All Models---</option>
+            <option *ngFor="let model of Models" [selected]="model.name===selectedModel.name" value={{model.name}}>
+                {{model.name}}
+            </option>
+        </select>
+        Page: {{currentPage}} Model_2 : {{selectedModel.name}}
+        Make_2 : {{selectedMake.name}}
+    </div>
+</div>
+<hr/>
+<div class="row" *ngIf="cars?.length > 0">
+    <div *ngFor="let car of cars ">
+        <div class="col-md-4 col-lg-4">
+           <!-- <car-thumbnail
+                    [photoUrl]="photosRoute"
+                    [currentPage]="currentPage" [currentMake]="selectedMake.name"
+                    [car]="car">
+
+            </car-thumbnail>-->
+            <div (click)="viewCarDetails(car.id)"
+                 class="well hoverwell thumbnail">
+                <div class="row">
+                    <div style="font-size: 21px">{{car.fullName}} <span class="pull-right">{{car.price}} Euro</span></div>
+                    <img src="{{photosRoute}}{{car.photoUrl}}" alt="{{car.fullName}}" class="col-lg-8 col-md-8"
+                         style="height: 130px"/>
+                    <div class="col-lg-4" style="padding-top: 5%;padding-left: 1px">
+                        <div> {{car.description}}</div>
+                        <div>Mileage:<strong> {{car.mileage}} </strong> km</div>
+                        <div> Fuel: {{car.fuel}}</div>
+                        <div style="padding-bottom: 1px"> Year: {{car.year}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="cars?.length===0">
+        <h4>Sorry no cars for now</h4>
+    </div>
+
+</div>
+<pagination [boundaryLinks]="true" [totalItems]="totalCars" [itemsPerPage]="pageSize"
+            [(ngModel)]="pageIdUrl" class="pagination-sm"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+            (pageChanged)="pageChanged($event)"></pagination>
+
+<!--Modal Related -->
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" *ngIf="selectedCarLoaded">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="pull-left">{{carDetails.fullName}}</span>
+                <button type="button" class="close" aria-label="Close" (click)="hideChildModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div>
+                    <img src="{{photosRoute}}{{carDetails.photoUrl}}" [alt]="carDetails.fullName" style="height: 200px;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div><strong>Fuel:</strong> {{carDetails.fuel}}</div>
+                            <div><strong>Mileage:</strong> {{carDetails.mileage}}</div>
+                            <div><strong>Price:</strong> ${{carDetails.price}}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <address>
+                                <strong>Address:</strong>
+                                {{carDetails.location}}<br />
+                                {{carDetails.dateAdded}}
+                            </address>
+                        </div>
+                    </div>
+                    <div>
+                        <a  class="btn btn-default" (click)="goBack()" >
+                            Back
+                        </a>
+                    </div>
+
+
+
+                </div>
+        </div>
+    </div>
+</div>
